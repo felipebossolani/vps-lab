@@ -10,6 +10,7 @@ Documento vivo. Atualizado a cada episódio.
 - Fail2ban bane o seu próprio IP se você errar a senha 3x testando. `fail2ban-client set sshd unbanip SEU_IP` salva vidas.
 - O backup do `sshd_config` (`sshd_config.bak`) vale ouro se você travar o acesso.
 - Bork Cloud (e a maioria dos providers) tem console web de emergência — use se precisar recuperar acesso.
+- **No Ubuntu 24.04 o serviço SSH se chama `ssh.service`, não `sshd.service`** (diferente de CentOS/RHEL e versões anteriores do Ubuntu). O script original usava `systemctl reload sshd` e falhava com "Unit sshd.service not found". Fix: trocar por `systemctl reload ssh`.
 
 ## EP02 — Coolify
 
