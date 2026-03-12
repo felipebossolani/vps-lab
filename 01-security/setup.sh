@@ -5,7 +5,7 @@
 #
 # O QUE ESSE SCRIPT FAZ:
 #   1. Atualiza o sistema
-#   2. Cria usuário não-root com sudo
+#   2. Cria usuário não-root com sudo (pede para definir senha)
 #   3. Configura chave SSH para o novo usuário
 #   4. Desabilita login root via SSH (mantém root, fecha a porta SSH)
 #   5. Configura UFW (firewall)
@@ -88,6 +88,11 @@ fi
 # Garantir que está no grupo sudo
 usermod -aG sudo "$NEW_USER"
 log "Usuário ${NEW_USER} adicionado ao grupo sudo"
+
+# Definir senha para o usuário (necessária para sudo)
+warn "Defina a senha do usuário ${NEW_USER} (usada apenas para sudo):"
+passwd "$NEW_USER"
+log "Senha definida para ${NEW_USER}"
 
 # =============================================================================
 # PASSO 3: Configurar chave SSH para o novo usuário

@@ -13,6 +13,7 @@ Documento vivo. Atualizado a cada episódio.
 - **No Ubuntu 24.04 o serviço SSH se chama `ssh.service`, não `sshd.service`** (diferente de CentOS/RHEL e versões anteriores do Ubuntu). O script original usava `systemctl reload sshd` e falhava com "Unit sshd.service not found". Fix: trocar por `systemctl reload ssh`.
 - **cloud-init sobrescreve sshd_config silenciosamente.** Ubuntu 24.04 com cloud-init cria `/etc/ssh/sshd_config.d/50-cloud-init.conf` com `PasswordAuthentication yes`, que tem prioridade sobre o `sshd_config` principal. Fix: remover o arquivo e criar `99-hardening.conf` com nossas configs.
 - **`systemctl reload ssh` nem sempre aplica todas as mudanças.** Usar `systemctl restart ssh` é mais seguro para garantir que as configs novas entrem em vigor.
+- **`adduser --disabled-password` cria usuário sem senha — `sudo` não funciona.** O login SSH é por chave, mas `sudo` precisa de senha. Fix: adicionar `passwd deploy` no script logo após criar o usuário.
 
 ## EP02 — Coolify
 
