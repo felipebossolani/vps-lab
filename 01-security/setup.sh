@@ -148,10 +148,23 @@ set_sshd "LoginGraceTime"          "20"
 set_sshd "ClientAliveInterval"     "300"
 set_sshd "ClientAliveCountMax"     "2"
 
+# Remove overrides do cloud-init que podem sobrescrever nossas configs
+if [[ -f /etc/ssh/sshd_config.d/50-cloud-init.conf ]]; then
+    rm /etc/ssh/sshd_config.d/50-cloud-init.conf
+    warn "Removido override do cloud-init (50-cloud-init.conf)"
+fi
+
+# Garante nossas configs via drop-in (maior prioridade)
+cat > /etc/ssh/sshd_config.d/99-hardening.conf << SSHEOF
+PasswordAuthentication no
+PermitRootLogin no
+SSHEOF
+log "Drop-in 99-hardening.conf criado"
+
 # Valida a config antes de reiniciar
 sshd -t && log "Configuração SSH válida"
 
-systemctl reload ssh
+systemctl restart ssh
 log "SSH reconfigurado — root bloqueado, apenas chave aceita"
 
 warn "IMPORTANTE: Abra um NOVO terminal e teste o acesso antes de sair!"
