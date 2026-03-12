@@ -151,7 +151,7 @@ set_sshd "ClientAliveCountMax"     "2"
 # Valida a config antes de reiniciar
 sshd -t && log "Configuração SSH válida"
 
-systemctl reload sshd
+systemctl reload ssh
 log "SSH reconfigurado — root bloqueado, apenas chave aceita"
 
 warn "IMPORTANTE: Abra um NOVO terminal e teste o acesso antes de sair!"
