@@ -1,0 +1,45 @@
+# docker-compose.yml — uso LOCAL para desenvolvimento e testes
+# Em produção, o PostgreSQL é gerenciado pelo Coolify (rede interna)
+#
+# Uso:
+#   docker compose up -d
+#   curl -X POST http://localhost:3000/shorten -H "Content-Type: application/json" -d '{"url":"https://github.com"}'
+
+services:
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://vpslab:vpslab@db:5432/shortener
+      BASE_URL: http://localhost:3000
+      NODE_ENV: development
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: vpslab
+      POSTGRES_PASSWORD: vpslab
+      POSTGRES_DB: shortener
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # IMPORTANTE: sem ports expostos aqui.
+    # O banco só é acessível internamente pela rede Docker.
+    # Em produção no Coolify, o mesmo princípio se aplica.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vpslab -d shortener"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+
+# Rede padrão isolada — containers só se falam internamente
+networks:
+  default:
+    name: vpslab-shortener

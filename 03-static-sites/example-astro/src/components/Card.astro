@@ -1,0 +1,55 @@
+---
+// src/components/Card.astro
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  badge: string;
+}
+
+const { title, description, href, badge } = Astro.props;
+---
+
+<a href={href} class="card" target="_blank" rel="noopener">
+  <span class="badge">{badge}</span>
+  <h2>{title}</h2>
+  <p>{description}</p>
+</a>
+
+<style>
+  .card {
+    display: block;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: var(--color-text);
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+  }
+
+  .card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .badge {
+    font-size: 0.7rem;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  h2 {
+    font-size: 1rem;
+    color: var(--color-accent);
+    margin: 0.5rem 0;
+  }
+
+  p {
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+</style>

@@ -1,0 +1,107 @@
+---
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+---
+
+<Layout title="vps-lab — Self-hosted com Coolify">
+  <main>
+    <header>
+      <h1>🖥️ vps-lab</h1>
+      <p class="subtitle">Uma VPS, um Coolify, infinitos projetos.</p>
+    </header>
+
+    <section class="grid">
+      <Card
+        title="EP01 — Segurança"
+        description="Hardening do servidor antes de instalar qualquer coisa. SSH por chave, UFW, fail2ban."
+        href="https://github.com/felipebossolani/vps-lab/tree/main/01-security"
+        badge="✅ Publicado"
+      />
+      <Card
+        title="EP02 — Coolify"
+        description="Self-hosted PaaS com deploy automático, SSL e domínios customizados."
+        href="https://github.com/felipebossolani/vps-lab/tree/main/02-coolify"
+        badge="✅ Publicado"
+      />
+      <Card
+        title="EP03 — Site Estático"
+        description="Deploy deste site via Coolify com CI/CD do GitHub. Push = deploy."
+        href="https://github.com/felipebossolani/vps-lab/tree/main/03-static-sites"
+        badge="✅ Publicado"
+      />
+      <Card
+        title="EP04 — Blog"
+        description="Blog com Astro content collections e deploy automatizado."
+        href="https://github.com/felipebossolani/vps-lab/tree/main/04-blog"
+        badge="🔜 Em breve"
+      />
+      <Card
+        title="EP05 — API + DB"
+        description="Encurtador de URLs com Node.js e PostgreSQL gerenciado pelo Coolify."
+        href="https://github.com/felipebossolani/vps-lab/tree/main/05-backend-with-db"
+        badge="🔜 Em breve"
+      />
+      <Card
+        title="EP06 — Observabilidade"
+        description="Grafana + Loki + Prometheus + Uptime Kuma. Enxergando tudo."
+        href="https://github.com/felipebossolani/vps-lab/tree/main/06-observability"
+        badge="🔜 Em breve"
+      />
+    </section>
+
+    <footer>
+      <p>
+        por <a href="https://linkedin.com/in/felipebossolani">Felipe Bossolani</a>
+        · <a href="https://github.com/felipebossolani/vps-lab">GitHub</a>
+      </p>
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  header {
+    text-align: center;
+    padding: 4rem 0 2rem;
+    border-bottom: 1px solid #2a2a3e;
+    margin-bottom: 3rem;
+  }
+
+  h1 {
+    font-size: 3rem;
+    color: #6C47FF;
+    margin: 0;
+  }
+
+  .subtitle {
+    color: #888;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #2a2a3e;
+    color: #666;
+  }
+
+  footer a {
+    color: #6C47FF;
+    text-decoration: none;
+  }
+</style>

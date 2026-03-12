@@ -1,0 +1,16 @@
+{
+  "name": "vpslab-shortener",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Encurtador de URLs — vps-lab EP05",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "nanoid": "^5.0.4",
+    "pg": "^8.11.3"
+  }
+}
