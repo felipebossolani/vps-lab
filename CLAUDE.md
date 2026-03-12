@@ -1,7 +1,12 @@
-# CLAUDE.md — vps-lab
+# CLAUDE.md
 
-Repositório público da série **vps-lab**.
-Contém scripts, código, checklists e documentação técnica de cada episódio.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Visão geral
+
+Repositório público da série **vps-lab** — documentando a construção de infraestrutura self-hosted com VPS + Coolify. Cada episódio (`01-security/`, `02-coolify/`, etc.) contém scripts prontos para rodar, checklists e docs técnicos.
+
+Repo complementar privado: [vps-lab-content](https://github.com/felipebossolani/vps-lab-content) (rascunhos de posts, prints, controle editorial).
 
 ---
 
@@ -17,33 +22,46 @@ Contém scripts, código, checklists e documentação técnica de cada episódio
 ## Contexto
 
 - **Autor:** Felipe Bossolani
-- **Provider VPS:** Bork Cloud (nacional 🇧🇷)
+- **Provider VPS:** Bork Cloud (nacional)
 - **OS:** Ubuntu 24.04
 - **PaaS:** Coolify (self-hosted)
-- **Domínio:** vpslab.dev (placeholder — substituir pelo real)
+- **Domínio:** `vpslab.dev` (placeholder — nunca substituir automaticamente)
 - **Usuário SSH:** `deploy` (root bloqueado via SSH)
+- **Stack:** Docker, Node.js 20, PostgreSQL 16, Astro
 
-## Estrutura
+## Comandos de desenvolvimento
 
-```
-vps-lab/
-├── 01-security/          ← EP01: hardening (setup.sh)
-├── 02-coolify/           ← EP02: instalação Coolify
-├── 03-static-sites/      ← EP03: site Astro
-├── 04-blog/              ← EP04: blog Astro
-├── 05-backend-with-db/   ← EP05: API Node.js + PostgreSQL
-├── 06-observability/     ← EP06: Grafana + Loki + Uptime Kuma
-├── 07-cost-analysis/     ← EP07: comparativo de custos
-└── docs/
-    ├── architecture.md
-    └── lessons-learned.md
+**API encurtador de URLs (05-backend-with-db/example-api/):**
+```bash
+npm run dev          # inicia com --watch
+npm start            # produção
+docker compose up    # stack completa (API + PostgreSQL)
 ```
 
-## Instruções para Claude Code
+**Site Astro (03-static-sites/example-astro/):**
+```bash
+npm run dev          # servidor de desenvolvimento
+npm run build        # build estático
+```
 
-- Scripts devem ser idempotentes e ter `set -euo pipefail`
-- Output colorido com seções claras (o usuário roda no servidor real)
+## Arquitetura
+
+Os scripts de cada episódio são feitos para rodar **no servidor VPS**, não localmente. Subdomínios mapeiam para serviços:
+
+`coolify.` · `site.` · `blog.` · `api.` · `status.` · `grafana.` — todos sob `vpslab.dev`
+
+A stack de observabilidade (EP06) usa Docker Compose com Grafana, Prometheus, Loki, Promtail, Node Exporter e Uptime Kuma na rede compartilhada `vpslab-monitoring`.
+
+## Convenções de shell scripts
+
+- Sempre iniciar com `set -euo pipefail`
+- Scripts devem ser **idempotentes** (seguros para re-executar)
+- Output colorido com helpers padronizados: `log()`, `warn()`, `error()`, `section()`
 - Nunca incluir IPs reais, senhas ou chaves nos arquivos
-- `vpslab.dev` é placeholder — não substituir automaticamente
-- `lessons-learned.md` deve ser atualizado após cada episódio concluído
-- O README.md principal tem badges e tabela de status dos episódios — manter atualizado
+- Scripts rodam como root (ou com sudo) em Ubuntu 24.04
+
+## Regras de conteúdo
+
+- `docs/lessons-learned.md` deve ser atualizado após cada episódio concluído
+- `README.md` tem tabela de status dos episódios — manter sincronizada
+- Status dos episódios: `✅` (concluído), `🔜` (próximo)
