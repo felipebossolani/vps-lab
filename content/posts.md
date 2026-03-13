@@ -119,7 +119,7 @@ O resultado: Coolify tem o que precisa, e eu não abro brecha desnecessária.
 
 O que ficou rodando depois de ~15 minutos:
 
-→ Painel em coolify.vpslab.dev com HTTPS automático (Let's Encrypt + Traefik)
+→ Painel em coolify.vpslab.com.br com HTTPS automático (Let's Encrypt + Traefik)
 → Deploy automático via GitHub (push = deploy)
 → Reverse proxy gerenciado
 → Gerenciamento de bancos de dados
@@ -149,7 +149,7 @@ O que fiz:
 → 1. Conectei o repositório vps-lab ao Coolify via GitHub App
 → 2. Apontei o Base Directory para /03-static-sites/example-astro
 → 3. Build pack Nixpacks detectou Astro automaticamente (sem configurar nada)
-→ 4. Adicionei o domínio site.vpslab.dev — SSL emitido em 90 segundos
+→ 4. Adicionei o domínio site.vpslab.com.br — SSL emitido em 90 segundos
 → 5. Habilitei Auto Deploy — a partir daí, push = deploy
 
 Uma coisa que aprendi na prática:
@@ -229,7 +229,7 @@ O que sobe com um único docker-compose:
 → Node Exporter — CPU, memória, disco do servidor
 → Loki — agrega logs de todos os containers
 → Promtail — agente que envia logs Docker para o Loki
-→ Uptime Kuma — status page pública em status.vpslab.dev
+→ Uptime Kuma — status page pública em status.vpslab.com.br
 
 O Grafana consegue responder:
 - Qual container está consumindo mais CPU agora?

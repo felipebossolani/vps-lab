@@ -30,9 +30,9 @@ Configure esses registros no painel do seu registrador de domínio (ou Cloudflar
 ## Configurar domínio do painel
 
 - [ ] Settings → Instance → Domain
-- [ ] Preencher: `https://coolify.vpslab.dev`
+- [ ] Preencher: `https://coolify.vpslab.com.br`
 - [ ] Salvar e aguardar SSL (pode levar 1-2 minutos)
-- [ ] Testar acesso em `https://coolify.vpslab.dev`
+- [ ] Testar acesso em `https://coolify.vpslab.com.br`
 - [ ] Fechar porta 8000 após confirmar HTTPS:
   ```bash
   sudo ufw delete allow 8000/tcp
@@ -66,7 +66,7 @@ O Coolify gera uma chave SSH própria durante a instalação para se comunicar c
 ## Checklist de segurança pós-Coolify
 
 - [ ] Porta 8000 fechada no UFW (após configurar domínio)
-- [ ] HTTPS funcionando em `coolify.vpslab.dev`
+- [ ] HTTPS funcionando em `coolify.vpslab.com.br`
 - [ ] Login root SSH ainda desabilitado (confirmar):
   ```bash
   sudo grep PermitRootLogin /etc/ssh/sshd_config
@@ -90,7 +90,7 @@ Internet
     ▼
 [Traefik — reverse proxy do Coolify]
     │
-    ├── coolify.vpslab.dev  →  Coolify UI
+    ├── coolify.vpslab.com.br  →  Coolify UI
     └── (próximos apps virão aqui)
 
 [Coolify] ←→ [Docker socket] ←→ [Containers]

@@ -25,7 +25,7 @@ Repo complementar privado: [vps-lab-content](https://github.com/felipebossolani/
 - **Provider VPS:** Bork Cloud (nacional)
 - **OS:** Ubuntu 24.04
 - **PaaS:** Coolify (self-hosted)
-- **Domínio:** `vpslab.dev` (placeholder — nunca substituir automaticamente)
+- **Domínio:** `vpslab.com.br`
 - **Usuário SSH:** `deploy` (root bloqueado via SSH)
 - **Stack:** Docker, Node.js 20, PostgreSQL 16, Astro
 
@@ -48,7 +48,7 @@ npm run build        # build estático
 
 Os scripts de cada episódio são feitos para rodar **no servidor VPS**, não localmente. Subdomínios mapeiam para serviços:
 
-`coolify.` · `site.` · `blog.` · `api.` · `status.` · `grafana.` — todos sob `vpslab.dev`
+`coolify.` · `site.` · `blog.` · `api.` · `status.` · `grafana.` — todos sob `vpslab.com.br`
 
 A stack de observabilidade (EP06) usa Docker Compose com Grafana, Prometheus, Loki, Promtail, Node Exporter e Uptime Kuma na rede compartilhada `vpslab-monitoring`.
 

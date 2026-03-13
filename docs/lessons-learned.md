@@ -20,7 +20,7 @@ Documento vivo. Atualizado a cada episódio.
 - Coolify v4 exige root para instalação. Non-root é experimental e tem bugs conhecidos com permissões do proxy.
 - A estratégia adotada: instalar como root, mas root não tem entrada SSH direta. Coolify usa chave própria.
 - Fechar porta 8000 DEPOIS de confirmar HTTPS funcionando. Não antes.
-- DNS precisa estar propagado antes de emitir o SSL. `dig coolify.vpslab.dev` para confirmar.
+- DNS precisa estar propagado antes de emitir o SSL. `dig coolify.vpslab.com.br` para confirmar.
 
 ## EP03 — Site Estático
 

@@ -6,7 +6,7 @@
 
 - Coolify instalado e funcionando (EP02)
 - Repositório no GitHub com o site Astro
-- DNS configurado: `site.vpslab.dev → SEU_IP`
+- DNS configurado: `site.vpslab.com.br → SEU_IP`
 
 ---
 
@@ -39,7 +39,7 @@ No painel Coolify:
 ### 4. Domínio e SSL
 
 1. Na aba **Domains**
-2. Adicionar: `https://site.vpslab.dev`
+2. Adicionar: `https://site.vpslab.com.br`
 3. Coolify + Traefik emitem SSL automaticamente via Let's Encrypt
 
 ### 5. Deploy automático
@@ -84,7 +84,7 @@ npm run build     # gera /dist
 - Logs de build disponíveis no painel Coolify
 
 **SSL não emite**
-- Confirme que o DNS está propagado: `dig site.vpslab.dev`
+- Confirme que o DNS está propagado: `dig site.vpslab.com.br`
 - Coolify usa Let's Encrypt com desafio HTTP — porta 80 precisa estar aberta
 
 **Deploy não trigou automaticamente**

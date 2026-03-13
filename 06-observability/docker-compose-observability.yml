@@ -2,11 +2,11 @@
 # Stack de observabilidade completa — para deploy via Coolify (Stack / Docker Compose)
 #
 # Serviços:
-#   - Grafana        → dashboards (grafana.vpslab.dev)
+#   - Grafana        → dashboards (grafana.vpslab.com.br)
 #   - Prometheus     → coleta de métricas
 #   - Loki           → coleta de logs
 #   - Promtail       → agente que envia logs do Docker para o Loki
-#   - Uptime Kuma    → status page pública (status.vpslab.dev)
+#   - Uptime Kuma    → status page pública (status.vpslab.com.br)
 #   - Node Exporter  → métricas do host (CPU, memória, disco)
 #
 # No Coolify: Projects → New Stack → colar esse arquivo
@@ -21,8 +21,8 @@ services:
     environment:
       GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:?Defina GRAFANA_PASSWORD}
-      GF_SERVER_DOMAIN: grafana.vpslab.dev
-      GF_SERVER_ROOT_URL: https://grafana.vpslab.dev
+      GF_SERVER_DOMAIN: grafana.vpslab.com.br
+      GF_SERVER_ROOT_URL: https://grafana.vpslab.com.br
       GF_USERS_ALLOW_SIGN_UP: "false"
     volumes:
       - grafana_data:/var/lib/grafana

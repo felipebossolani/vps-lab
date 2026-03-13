@@ -4,7 +4,7 @@ Série pública documentando a construção de uma infraestrutura self-hosted co
 
 Cada episódio tem script pronto para rodar, checklist e post publicado no LinkedIn e Twitter.
 
-> **VPS:** Ubuntu 24.04 · **PaaS:** Coolify · **Domínio:** vpslab.dev
+> **VPS:** Ubuntu 24.04 · **PaaS:** Coolify · **Domínio:** vpslab.com.br
 
 ---
 
@@ -25,13 +25,13 @@ Cada episódio tem script pronto para rodar, checklist e post publicado no Linke
 ## 🗺️ Arquitetura
 
 ```
-vpslab.dev
-├── coolify.vpslab.dev     → Painel Coolify (HTTPS automático)
-├── site.vpslab.dev        → Site estático Astro
-├── blog.vpslab.dev        → Blog Astro
-├── api.vpslab.dev         → API encurtador de URLs (Node + PostgreSQL)
-├── status.vpslab.dev      → Uptime Kuma (público)
-└── grafana.vpslab.dev     → Grafana (protegido)
+vpslab.com.br
+├── coolify.vpslab.com.br     → Painel Coolify (HTTPS automático)
+├── site.vpslab.com.br        → Site estático Astro
+├── blog.vpslab.com.br        → Blog Astro
+├── api.vpslab.com.br         → API encurtador de URLs (Node + PostgreSQL)
+├── status.vpslab.com.br      → Uptime Kuma (público)
+└── grafana.vpslab.com.br     → Grafana (protegido)
 ```
 
 ---

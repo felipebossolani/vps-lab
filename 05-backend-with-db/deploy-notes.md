@@ -42,13 +42,13 @@ Na aba **Environment Variables** da aplicação:
 | Variável | Valor |
 |----------|-------|
 | `DATABASE_URL` | `postgres://vpslab:SENHA@shortener-db:5432/shortener` |
-| `BASE_URL` | `https://api.vpslab.dev` |
+| `BASE_URL` | `https://api.vpslab.com.br` |
 | `NODE_ENV` | `production` |
 | `PORT` | `3000` |
 
 ### Domínio
 
-- Aba **Domains** → `https://api.vpslab.dev`
+- Aba **Domains** → `https://api.vpslab.com.br`
 - SSL automático via Let's Encrypt
 
 ---
@@ -71,26 +71,26 @@ docker exec -it shortener-db psql -U vpslab -d shortener
 
 ```bash
 # Health check
-curl https://api.vpslab.dev/health
+curl https://api.vpslab.com.br/health
 
 # Encurtar uma URL
-curl -X POST https://api.vpslab.dev/shorten \
+curl -X POST https://api.vpslab.com.br/shorten \
   -H "Content-Type: application/json" \
   -d '{"url": "https://github.com/felipebossolani/vps-lab"}'
 
 # Resposta esperada:
 # {
 #   "slug": "abc1234",
-#   "short_url": "https://api.vpslab.dev/abc1234",
+#   "short_url": "https://api.vpslab.com.br/abc1234",
 #   "original_url": "https://github.com/...",
 #   "created_at": "2025-01-01T00:00:00Z"
 # }
 
 # Testar redirect
-curl -L https://api.vpslab.dev/abc1234
+curl -L https://api.vpslab.com.br/abc1234
 
 # Listar URLs criadas
-curl https://api.vpslab.dev/api/urls
+curl https://api.vpslab.com.br/api/urls
 ```
 
 ---
@@ -120,7 +120,7 @@ docker compose down
 Internet
     │
     ▼
-[Traefik] → api.vpslab.dev
+[Traefik] → api.vpslab.com.br
     │
     ▼
 [Container: vpslab-shortener]    ← porta 3000, sem exposição externa

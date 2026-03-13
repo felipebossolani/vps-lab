@@ -14,11 +14,11 @@ graph TB
             Coolify[Coolify<br/>PaaS UI]
             
             subgraph Apps["Aplicações"]
-                Astro[Site Astro<br/>site.vpslab.dev]
-                Blog[Blog Astro<br/>blog.vpslab.dev]
-                API[API Node.js<br/>api.vpslab.dev]
-                Uptime[Uptime Kuma<br/>status.vpslab.dev]
-                Grafana[Grafana<br/>grafana.vpslab.dev]
+                Astro[Site Astro<br/>site.vpslab.com.br]
+                Blog[Blog Astro<br/>blog.vpslab.com.br]
+                API[API Node.js<br/>api.vpslab.com.br]
+                Uptime[Uptime Kuma<br/>status.vpslab.com.br]
+                Grafana[Grafana<br/>grafana.vpslab.com.br]
             end
             
             subgraph Data["Dados"]

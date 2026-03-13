@@ -5,7 +5,7 @@
 #
 # PRÉ-REQUISITOS:
 #   - EP01 concluído (usuário deploy criado, firewall ativo)
-#   - Domínio apontando para o IP do servidor (ex: coolify.vpslab.dev → IP)
+#   - Domínio apontando para o IP do servidor (ex: coolify.vpslab.com.br → IP)
 #   - Acesso como root (Coolify exige root para instalação)
 #
 # COMO USAR:
@@ -114,7 +114,7 @@ echo ""
 echo -e "${YELLOW}PRÓXIMOS PASSOS MANUAIS (via painel web):${NC}"
 echo ""
 echo "  1. Crie sua conta admin em http://SEU_IP:8000"
-echo "  2. Settings → Domain → adicione https://coolify.vpslab.dev"
+echo "  2. Settings → Domain → adicione https://coolify.vpslab.com.br"
 echo "  3. Aguarde SSL (Let's Encrypt) ser emitido automaticamente"
 echo "  4. Após SSL, feche porta 8000:"
 echo "     sudo ufw delete allow 8000/tcp"
