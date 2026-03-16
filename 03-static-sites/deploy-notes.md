@@ -15,9 +15,12 @@
 ### 1. Conectar GitHub ao Coolify
 
 No painel Coolify:
-1. **Settings → Source → GitHub**
-2. Instalar o **Coolify GitHub App** no seu repositório
-3. Autorizar acesso ao repo `vps-lab`
+1. **Sources → + Add**
+2. Preencher **Name** (ex: "vpslab"), deixar **Organization** vazio
+3. **Continue**
+4. Ignorar "Manual Installation" — em **Automated Installation**, trocar Webhook Endpoint para o domínio HTTPS do Coolify
+5. Clicar **Register Now** → GitHub abre para autorizar (nome do App fica `vpslab-SEUUSER`)
+6. Voltar ao Coolify — campos preenchidos automaticamente
 
 ### 2. Criar nova aplicação
 
