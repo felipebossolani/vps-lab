@@ -7,10 +7,16 @@
 #   1. Atualiza o sistema
 #   2. Cria usuário não-root com sudo (pede para definir senha)
 #   3. Configura chave SSH para o novo usuário
-#   4. Desabilita login root via SSH (mantém root, fecha a porta SSH)
-#   5. Configura UFW (firewall)
+#   4. Endurece SSH (root só por chave, senha desabilitada)
+#   5. Configura UFW (firewall) — compatível com Docker/Coolify
 #   6. Instala e configura fail2ban
 #   7. Habilita atualizações automáticas de segurança
+#
+# COMPATIBILIDADE:
+#   Esse script foi desenhado para funcionar COM Docker e Coolify.
+#   O PermitRootLogin usa "prohibit-password" (chave sim, senha não),
+#   porque o Coolify precisa de SSH root local via chave.
+#   O UFW inclui regras para tráfego Docker-to-host não ser bloqueado.
 #
 # COMO USAR:
 #   1. Na SUA MÁQUINA LOCAL, gere um par de chaves SSH (se ainda não tiver):
@@ -118,7 +124,7 @@ chown -R "${NEW_USER}:${NEW_USER}" "$SSH_DIR"
 log "Permissões do diretório SSH configuradas"
 
 # =============================================================================
-# PASSO 4: Configurar SSH — desabilitar root e senha
+# PASSO 4: Configurar SSH — root só por chave, senha desabilitada
 # =============================================================================
 section "4/7 Endurecendo configuração SSH"
 
@@ -142,8 +148,8 @@ set_sshd() {
 }
 
 set_sshd "Port"                    "$SSH_PORT"
-set_sshd "PermitRootLogin"         "no"           # root existe, mas não entra via SSH
-set_sshd "PasswordAuthentication"  "no"           # somente chave SSH
+set_sshd "PermitRootLogin"         "prohibit-password"  # chave sim, senha não (Coolify precisa)
+set_sshd "PasswordAuthentication"  "no"                  # somente chave SSH
 set_sshd "PubkeyAuthentication"    "yes"
 set_sshd "AuthorizedKeysFile"      ".ssh/authorized_keys"
 set_sshd "X11Forwarding"           "no"
@@ -162,7 +168,7 @@ fi
 # Garante nossas configs via drop-in (maior prioridade)
 cat > /etc/ssh/sshd_config.d/99-hardening.conf << SSHEOF
 PasswordAuthentication no
-PermitRootLogin no
+PermitRootLogin prohibit-password
 SSHEOF
 log "Drop-in 99-hardening.conf criado"
 
@@ -170,13 +176,13 @@ log "Drop-in 99-hardening.conf criado"
 sshd -t && log "Configuração SSH válida"
 
 systemctl restart ssh
-log "SSH reconfigurado — root bloqueado, apenas chave aceita"
+log "SSH reconfigurado — root só por chave, senha desabilitada"
 
 warn "IMPORTANTE: Abra um NOVO terminal e teste o acesso antes de sair!"
 warn "  ssh -i ~/.ssh/vpslab -p ${SSH_PORT} ${NEW_USER}@\$(hostname -I | awk '{print \$1}')"
 
 # =============================================================================
-# PASSO 5: Configurar UFW (firewall)
+# PASSO 5: Configurar UFW (firewall) — compatível com Docker
 # =============================================================================
 section "5/7 Configurando UFW"
 
@@ -194,6 +200,24 @@ ufw allow "$SSH_PORT"/tcp    comment 'SSH'
 ufw allow 80/tcp             comment 'HTTP'
 ufw allow 443/tcp            comment 'HTTPS'
 ufw allow 8000/tcp           comment 'Coolify UI (remover após configurar domínio)'
+
+# Docker-to-host: permite que containers acessem SSH do host
+# Necessário para Coolify gerenciar o servidor via host.docker.internal
+ufw allow from 172.16.0.0/12 to any port "$SSH_PORT" proto tcp comment 'Docker bridge to host SSH'
+ufw allow from 10.0.0.0/8 to any port "$SSH_PORT" proto tcp comment 'Docker overlay to host SSH'
+
+# Permite forward de tráfego Docker (containers se comunicando)
+# Sem isso, Docker custom bridge networks não funcionam com UFW
+sed -i 's/^DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/' /etc/default/ufw
+log "Forward policy ajustada para ACCEPT (Docker)"
+
+# Permite tráfego de bridges Docker no INPUT (host.docker.internal)
+if ! grep -q "ufw-before-input -i br+" /etc/ufw/before.rules 2>/dev/null; then
+    sed -i '/-A ufw-before-input -i lo -j ACCEPT/a -A ufw-before-input -i br+ -j ACCEPT' /etc/ufw/before.rules
+    log "Regra para bridges Docker adicionada em before.rules"
+else
+    warn "Regra para bridges Docker já existe em before.rules"
+fi
 
 # Habilita sem confirmação interativa
 ufw --force enable
@@ -262,9 +286,9 @@ echo "╚═══════════════════════�
 echo ""
 echo "  Usuário criado:       ${NEW_USER}"
 echo "  Porta SSH:            ${SSH_PORT}"
-echo "  Login root SSH:       DESABILITADO"
+echo "  Login root SSH:       SÓ POR CHAVE (prohibit-password)"
 echo "  Login por senha:      DESABILITADO"
-echo "  Firewall (UFW):       ATIVO"
+echo "  Firewall (UFW):       ATIVO (compatível com Docker)"
 echo "  fail2ban:             ATIVO"
 echo "  Auto security updates: ATIVO"
 echo ""
