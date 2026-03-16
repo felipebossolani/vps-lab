@@ -28,7 +28,7 @@ No painel Coolify:
 2. Selecionar **GitHub** como source
 3. Repositório: `felipebossolani/vps-lab`
 4. Branch: `main`
-5. **Build Pack:** `Nixpacks` (detecta Astro automaticamente)
+5. **Build Pack:** `Static` (não Nixpacks — o Astro gera HTML estático)
 
 ### 3. Configurações da aplicação
 
@@ -37,7 +37,9 @@ No painel Coolify:
 | Base Directory | `/03-static-sites/example-astro` |
 | Build Command | `npm run build` |
 | Publish Directory | `dist` |
-| Port | `4321` (dev) — não necessário para site estático |
+
+> **Atenção:** O Astro com `output: 'static'` gera HTMLs em `dist/`. Use o build pack **Static**,
+> não Nixpacks. Com Nixpacks o deploy completa mas dá 404.
 
 ### 4. Domínio e SSL
 
