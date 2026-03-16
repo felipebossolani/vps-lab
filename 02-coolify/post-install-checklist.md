@@ -27,6 +27,17 @@ Configure esses registros no painel do seu registrador de domínio (ou Cloudflar
 
 ---
 
+## Onboarding
+
+- [ ] Selecione "This Machine" no Choose Server Type
+- [ ] Aguarde validação do servidor (deve conectar via SSH)
+- [ ] Confirme "Setup Complete" com todos os checks verdes
+
+> Se aparecer "Connection refused" na validação, execute o script de fix:
+> `sudo bash fix-coolify-bridge.sh`
+
+---
+
 ## Configurar domínio do painel
 
 - [ ] Settings → Instance → Domain
@@ -39,6 +50,9 @@ Configure esses registros no painel do seu registrador de domínio (ou Cloudflar
   sudo ufw status
   ```
 
+> Se o Traefik não subir (erro de IPv6/ParseAddr), execute o script de fix:
+> `sudo bash fix-coolify-bridge.sh`
+
 ---
 
 ## Configurar chave SSH do Coolify (para gerenciar o próprio servidor)
@@ -48,18 +62,9 @@ O Coolify gera uma chave SSH própria durante a instalação para se comunicar c
 - [ ] Verificar se a chave foi gerada:
   ```bash
   ls /data/coolify/ssh/keys/
-  # deve existir: id.root@host.docker.internal
   ```
 - [ ] No painel: Keys & Tokens → SSH Keys → verificar se a chave do host está listada
 - [ ] Servers → localhost → validar conexão
-
----
-
-## Configurar backup do Coolify
-
-- [ ] Settings → Backup
-- [ ] Configurar S3-compatible (Cloudflare R2, Backblaze B2 ou similar)
-- [ ] Testar backup manual
 
 ---
 
@@ -67,10 +72,10 @@ O Coolify gera uma chave SSH própria durante a instalação para se comunicar c
 
 - [ ] Porta 8000 fechada no UFW (após configurar domínio)
 - [ ] HTTPS funcionando em `coolify.vpslab.com.br`
-- [ ] Login root SSH ainda desabilitado (confirmar):
+- [ ] Login root SSH por chave apenas (confirmar):
   ```bash
   sudo grep PermitRootLogin /etc/ssh/sshd_config
-  # deve retornar: PermitRootLogin no
+  # deve retornar: PermitRootLogin prohibit-password
   ```
 - [ ] fail2ban ainda ativo:
   ```bash
@@ -95,6 +100,25 @@ Internet
 
 [Coolify] ←→ [Docker socket] ←→ [Containers]
 ```
+
+---
+
+## Troubleshooting
+
+### "Connection refused" na validação do servidor
+O container Coolify não alcança o SSH do host. Causa: UFW bloqueia tráfego Docker-to-host.
+```bash
+sudo bash fix-coolify-bridge.sh
+```
+
+### Traefik não sobe (erro ParseAddr IPv6)
+O Coolify cria a rede Docker com gateway IPv6 em formato inválido. O fix-coolify-bridge.sh recria a rede sem IPv6.
+```bash
+sudo bash fix-coolify-bridge.sh
+```
+
+### Proxy aparece como "RUNNING" mas não existe container
+Reinicie o proxy pelo painel: Servers → localhost → Proxy → Start.
 
 ---
 
