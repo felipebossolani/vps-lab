@@ -44,8 +44,9 @@ No painel Coolify:
 ### 4. Domínio e SSL
 
 1. Na aba **Domains**
-2. Adicionar: `https://site.vpslab.com.br`
-3. Coolify + Traefik emitem SSL automaticamente via Let's Encrypt
+2. Substituir o domínio sslip.io por `https://site.vpslab.com.br`
+3. Salvar e clicar **Redeploy** (obrigatório — as rotas do Traefik são geradas no deploy)
+4. Coolify + Traefik emitem SSL automaticamente via Let's Encrypt
 
 ### 5. Deploy automático
 
