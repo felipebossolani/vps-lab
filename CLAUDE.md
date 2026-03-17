@@ -44,6 +44,12 @@ npm run dev          # servidor de desenvolvimento
 npm run build        # build estático
 ```
 
+**Blog Astro (04-blog/example-blog/):**
+```bash
+npm run dev          # servidor de desenvolvimento
+npm run build        # build estático (content collections)
+```
+
 ## Arquitetura
 
 Os scripts de cada episódio são feitos para rodar **no servidor VPS**, não localmente. Subdomínios mapeiam para serviços:
@@ -65,3 +71,4 @@ A stack de observabilidade (EP06) usa Docker Compose com Grafana, Prometheus, Lo
 - `docs/lessons-learned.md` deve ser atualizado após cada episódio concluído
 - `README.md` tem tabela de status dos episódios — manter sincronizada
 - Status dos episódios: `✅` (concluído), `🔜` (próximo)
+- A cada novo episódio, criar também o post correspondente no blog (`04-blog/example-blog/src/content/posts/`)
