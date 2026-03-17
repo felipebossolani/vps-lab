@@ -1,7 +1,7 @@
 ---
 title: "EP02 — Coolify: PaaS self-hosted na VPS"
 description: "Instalação do Coolify como alternativa self-hosted ao Railway, Render e Vercel. Deploy automático, SSL e domínios customizados."
-date: 2026-03-16
+date: 2026-03-14
 tags: ["coolify", "docker", "paas", "deploy"]
 ---
 
