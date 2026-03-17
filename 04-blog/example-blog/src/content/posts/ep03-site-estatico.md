@@ -24,6 +24,8 @@ Quero um site índice para a série vps-lab. Precisa estar no ar em `site.vpslab
 | Build Command | `npm run build` |
 | Publish Directory | `dist` |
 
+Sem configuração de porta. O Build Pack Static serve os HTMLs diretamente via Traefik — não roda nenhum server Node.
+
 ## Perrengues
 
 ### Build Pack errado

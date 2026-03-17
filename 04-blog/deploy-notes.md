@@ -30,6 +30,7 @@
 
 > **Nota:** Mesmo fluxo do EP03. O Astro com content collections continua gerando
 > HTML estático em `dist/`. O Build Pack Static serve os arquivos gerados.
+> Não precisa configurar porta — o Traefik serve os HTMLs diretamente.
 
 ### 3. Domínio e SSL
 
