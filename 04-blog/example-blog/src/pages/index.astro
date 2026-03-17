@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import PostCard from '../components/PostCard.astro';
+
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Layout title="vps-lab blog">
+  <main>
+    <header>
+      <h1>vps-lab blog</h1>
+      <p class="subtitle">Documentando infraestrutura self-hosted na prática.</p>
+    </header>
+
+    <section class="posts">
+      {posts.map((post) => (
+        <PostCard
+          title={post.data.title}
+          description={post.data.description}
+          date={post.data.date}
+          slug={post.slug}
+          tags={post.data.tags}
+        />
+      ))}
+    </section>
+
+    <footer>
+      <p>
+        por <a href="https://linkedin.com/in/felipebossolani">Felipe Bossolani</a>
+        · <a href="https://site.vpslab.com.br">site</a>
+        · <a href="https://github.com/felipebossolani/vps-lab">GitHub</a>
+      </p>
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  header {
+    text-align: center;
+    padding: 4rem 0 2rem;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    color: var(--color-accent);
+  }
+
+  .subtitle {
+    color: var(--color-muted);
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+  }
+
+  .posts {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+    color: #666;
+  }
+
+  footer a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+</style>
