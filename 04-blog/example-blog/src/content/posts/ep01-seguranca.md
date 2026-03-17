@@ -1,6 +1,6 @@
 ---
 title: "EP01 — Segurança: hardening antes de qualquer deploy"
-description: "SSH por chave, UFW, fail2ban e usuário deploy. O mínimo antes de instalar qualquer coisa na VPS."
+description: "SSH por chave, UFW, fail2ban e usuário deploy. O mínimo antes de colocar qualquer coisa no ar."
 date: 2026-03-12
 tags: ["seguranca", "ssh", "ufw", "fail2ban"]
 ---
