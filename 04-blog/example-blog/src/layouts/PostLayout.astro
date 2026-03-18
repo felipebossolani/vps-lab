@@ -18,7 +18,7 @@ const date = new Date(frontmatter.date).toLocaleDateString('pt-BR', {
 });
 ---
 
-<Layout title={`${frontmatter.title} — vps-lab blog`}>
+<Layout title={`${frontmatter.title} — vps-lab blog`} description={frontmatter.description}>
   <main>
     <nav>
       <a href="/">&larr; voltar</a>
