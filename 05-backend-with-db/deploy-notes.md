@@ -10,7 +10,7 @@ Ele existe apenas na rede interna Docker — só a API consegue falar com ele.
 1. No painel Coolify: **Databases → New Database → PostgreSQL**
 2. Configurar:
    - **Name:** `shortener-db`
-   - **PostgreSQL User:** `vpslab`
+   - **PostgreSQL User:** `shortener-user`
    - **PostgreSQL Password:** (gere uma senha forte)
    - **PostgreSQL DB:** `shortener`
 3. **Importante — NÃO habilite "Publicly Accessible"**
@@ -20,8 +20,8 @@ Ele existe apenas na rede interna Docker — só a API consegue falar com ele.
 ### Obtendo a connection string interna
 
 Após criar o banco, Coolify mostra duas connection strings:
-- **Internal:** `postgres://vpslab:SENHA@shortener-db:5432/shortener` ← use essa
-- **External:** `postgres://vpslab:SENHA@SEU_IP:PORT/shortener` ← NÃO use em produção
+- **Internal:** `postgres://shortener-user:SENHA@shortener-db:5432/shortener` ← use essa
+- **External:** `postgres://shortener-user:SENHA@SEU_IP:PORT/shortener` ← NÃO use em produção
 
 A URL interna funciona porque a API e o banco estão na mesma rede Docker gerenciada pelo Coolify.
 
@@ -41,7 +41,7 @@ Na aba **Environment Variables** da aplicação:
 
 | Variável | Valor |
 |----------|-------|
-| `DATABASE_URL` | `postgres://vpslab:SENHA@shortener-db:5432/shortener` |
+| `DATABASE_URL` | `postgres://shortener-user:SENHA@shortener-db:5432/shortener` |
 | `BASE_URL` | `https://api.vpslab.com.br` |
 | `NODE_ENV` | `production` |
 | `PORT` | `3000` |
@@ -59,10 +59,10 @@ Após o deploy, confirme que o banco NÃO está acessível externamente:
 
 ```bash
 # Da sua máquina local — deve FALHAR (timeout ou connection refused)
-psql postgres://vpslab:SENHA@SEU_IP:5432/shortener
+psql postgres://shortener-user:SENHA@SEU_IP:5432/shortener
 
 # Do servidor, dentro da rede Docker — deve FUNCIONAR
-docker exec -it shortener-db psql -U vpslab -d shortener
+docker exec -it shortener-db psql -U shortener-user -d shortener
 ```
 
 ---
@@ -123,7 +123,7 @@ Internet
 [Traefik] → api.vpslab.com.br
     │
     ▼
-[Container: vpslab-shortener]    ← porta 3000, sem exposição externa
+[Container: shortener-api]       ← porta 3000, sem exposição externa
     │  (rede interna Docker)
     ▼
 [Container: shortener-db]        ← PostgreSQL, zero porta exposta

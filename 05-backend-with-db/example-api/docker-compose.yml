@@ -12,7 +12,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgres://vpslab:vpslab@shortener-db:5432/shortener
+      DATABASE_URL: postgres://shortener-user:shortener-user@shortener-db:5432/shortener
       BASE_URL: http://localhost:3000
       NODE_ENV: development
     depends_on:
@@ -24,8 +24,8 @@ services:
     container_name: shortener-db
     image: postgres:16-alpine
     environment:
-      POSTGRES_USER: vpslab
-      POSTGRES_PASSWORD: vpslab
+      POSTGRES_USER: shortener-user
+      POSTGRES_PASSWORD: shortener-user
       POSTGRES_DB: shortener
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -33,7 +33,7 @@ services:
     # O banco só é acessível internamente pela rede Docker.
     # Em produção no Coolify, o mesmo princípio se aplica.
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U vpslab -d shortener"]
+      test: ["CMD-SHELL", "pg_isready -U shortener-user -d shortener"]
       interval: 5s
       timeout: 5s
       retries: 5
