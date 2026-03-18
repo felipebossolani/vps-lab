@@ -2,35 +2,32 @@
 # Multi-stage build: menor imagem final, sem devDependencies
 
 # ── Stage 1: instalar dependências ──────────────────────────────────────────
-FROM node:20-alpine AS deps
+FROM node:20.20-alpine3.21 AS deps
 
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
+COPY package.json package-lock.json ./
 
 RUN npm ci --omit=dev
 
 # ── Stage 2: imagem final ────────────────────────────────────────────────────
-FROM node:20-alpine AS runner
+FROM node:20.20-alpine3.21 AS runner
 
-# Usuário não-root dentro do container
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 WORKDIR /app
 
-# Copia dependências do stage anterior
-COPY --from=deps /app/node_modules ./node_modules
+ENV NODE_ENV=production
 
-# Copia código fonte
-COPY src/ ./src/
-COPY package.json ./
+COPY --from=deps --chown=appuser:appgroup /app/node_modules ./node_modules
 
-# Muda para usuário não-root
+COPY --chown=appuser:appgroup src/ ./src/
+COPY --chown=appuser:appgroup package.json ./
+
 USER appuser
 
 EXPOSE 3000
 
-# Health check para o Coolify / Docker saber que o container está saudável
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
   CMD wget -qO- http://localhost:3000/health || exit 1
 
