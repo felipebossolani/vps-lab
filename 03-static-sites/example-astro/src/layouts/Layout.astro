@@ -1,10 +1,13 @@
 ---
-// src/layouts/Layout.astro
 interface Props {
-  title: string;
+  title?: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const {
+  title = 'vps-lab',
+  description = 'Série pública documentando uma VPS self-hosted do zero. Scripts, perrengues e lições reais.'
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -12,32 +15,89 @@ const { title } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Série documentando infraestrutura self-hosted com VPS + Coolify" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/identity/favicon/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/identity/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/identity/favicon/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/identity/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/identity/favicon/site.webmanifest" />
+
+    <!-- OG -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://site.vpslab.com.br" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet" />
+
     <title>{title}</title>
+
     <style is:global>
       :root {
-        --color-bg: #0C0C1A;
-        --color-surface: #13131f;
-        --color-border: #2a2a3e;
-        --color-accent: #6C47FF;
-        --color-text: #e2e8f0;
-        --color-muted: #888;
+        --bg:        #0C0C1A;
+        --surface:   #13131f;
+        --surface-dim: #0f0f1c;
+        --border:    #1e2130;
+        --border-dim: #1a1d2a;
+        --accent:    #3b82f6;
+        --accent-dim: rgba(59, 130, 246, 0.12);
+        --text:      #f1f5f9;
+        --muted:     #64748b;
+        --muted-dim: #2d3748;
+        --mono:      'JetBrains Mono', 'Fira Code', monospace;
+        --sans:      'DM Sans', system-ui, sans-serif;
       }
 
-      * { box-sizing: border-box; margin: 0; padding: 0; }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      html { scroll-behavior: smooth; }
 
       body {
-        background-color: var(--color-bg);
-        color: var(--color-text);
-        font-family: 'JetBrains Mono', 'Fira Code', monospace;
-        line-height: 1.6;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        font-size: 16px;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
         min-height: 100vh;
       }
 
-      a { color: var(--color-accent); }
+      /* grid de pontos no fundo */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+        background-size: 40px 40px;
+        pointer-events: none;
+        z-index: 0;
+      }
 
-      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
+      /* fade lateral para suavizar o grid */
+      body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(ellipse 60% 50% at 50% 0%, rgba(59,130,246,0.04) 0%, transparent 70%),
+          radial-gradient(ellipse 80% 40% at 50% 100%, rgba(12,12,26,0.8) 0%, transparent 60%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      main { position: relative; z-index: 1; }
+
+      a { color: inherit; text-decoration: none; }
+
+      ::selection {
+        background: var(--accent);
+        color: #fff;
+      }
     </style>
   </head>
   <body>

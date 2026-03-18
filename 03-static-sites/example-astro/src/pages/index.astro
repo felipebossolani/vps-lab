@@ -1,107 +1,178 @@
 ---
-// src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import Header from '../components/Header.astro';
+import EpisodeCard from '../components/EpisodeCard.astro';
+import Footer from '../components/Footer.astro';
+
+const episodes = [
+  {
+    number: 'EP01',
+    title: 'Segurança',
+    description: 'Hardening antes de instalar qualquer coisa. SSH por chave, UFW, fail2ban. O servidor já estava sendo atacado 3 minutos após provisionar.',
+    status: 'published',
+    codeUrl: 'https://github.com/felipebossolani/vps-lab/tree/main/01-security',
+    postUrl: 'https://linkedin.com/in/felipebossolani',
+  },
+  {
+    number: 'EP02',
+    title: 'Coolify',
+    description: 'Self-hosted PaaS com firewall ativo. O que os tutoriais não mencionam quando você fez o hardening direito.',
+    status: 'published',
+    codeUrl: 'https://github.com/felipebossolani/vps-lab/tree/main/02-coolify',
+    postUrl: 'https://linkedin.com/in/felipebossolani',
+  },
+  {
+    number: 'EP03',
+    title: 'Site Estático',
+    description: 'git push = deploy automático em 60 segundos. Astro + Coolify + GitHub sem configuração manual.',
+    status: 'published',
+    codeUrl: 'https://github.com/felipebossolani/vps-lab/tree/main/03-static-sites',
+    postUrl: 'https://linkedin.com/in/felipebossolani',
+  },
+  {
+    number: 'EP04',
+    title: 'Blog',
+    description: 'Sem Ghost Pro, sem WordPress, sem mensalidade. Astro content collections com deploy automático.',
+    status: 'published',
+    codeUrl: 'https://github.com/felipebossolani/vps-lab/tree/main/04-blog',
+    postUrl: 'https://linkedin.com/in/felipebossolani',
+  },
+  {
+    number: 'EP05',
+    title: 'API + PostgreSQL',
+    description: 'Banco isolado na rede interna Docker. Sem nenhuma porta exposta na internet.',
+    status: 'soon',
+  },
+  {
+    number: 'EP06',
+    title: 'Observabilidade',
+    description: 'Grafana + Loki + Uptime Kuma. Saber que algo quebrou antes de alguém perguntar.',
+    status: 'soon',
+  },
+  {
+    number: 'EP07',
+    title: 'Custo & Balanço',
+    description: 'Quanto custa self-hostar tudo isso vs pagar SaaS equivalente. A conta real.',
+    status: 'soon',
+  },
+];
 ---
 
-<Layout title="vps-lab — Self-hosted com Coolify">
+<Layout>
   <main>
-    <header>
-      <h1>🖥️ vps-lab</h1>
-      <p class="subtitle">Uma VPS, um Coolify, zero desculpas.</p>
-    </header>
+    <Header />
 
-    <section class="grid">
-      <Card
-        title="EP01 — Segurança"
-        description="Hardening do servidor antes de instalar qualquer coisa. SSH por chave, UFW, fail2ban."
-        href="https://github.com/felipebossolani/vps-lab/tree/main/01-security"
-        badge="✅ Publicado"
-      />
-      <Card
-        title="EP02 — Coolify"
-        description="Self-hosted PaaS com deploy automático, SSL e domínios customizados."
-        href="https://github.com/felipebossolani/vps-lab/tree/main/02-coolify"
-        badge="✅ Publicado"
-      />
-      <Card
-        title="EP03 — Site Estático"
-        description="Deploy deste site via Coolify com CI/CD do GitHub. Push = deploy."
-        href="https://github.com/felipebossolani/vps-lab/tree/main/03-static-sites"
-        badge="✅ Publicado"
-      />
-      <Card
-        title="EP04 — Blog"
-        description="Blog com Astro content collections e deploy automatizado."
-        href="https://github.com/felipebossolani/vps-lab/tree/main/04-blog"
-        badge="✅ Publicado"
-      />
-      <Card
-        title="EP05 — API + DB"
-        description="Encurtador de URLs com Node.js e PostgreSQL gerenciado pelo Coolify."
-        href="https://github.com/felipebossolani/vps-lab/tree/main/05-backend-with-db"
-        badge="🔜 Em breve"
-      />
-      <Card
-        title="EP06 — Observabilidade"
-        description="Grafana + Loki + Prometheus + Uptime Kuma. Enxergando tudo."
-        href="https://github.com/felipebossolani/vps-lab/tree/main/06-observability"
-        badge="🔜 Em breve"
-      />
+    <!-- Hero -->
+    <section class="hero">
+      <p class="hero-label">SÉRIE PÚBLICA · 7 EPISÓDIOS</p>
+      <h1 class="hero-title">VPS do zero ao self-hosted.</h1>
+      <p class="hero-sub">
+        Scripts, perrengues e lições de quem fez de verdade.<br />
+        Ubuntu 24.04 · Coolify · Docker
+      </p>
     </section>
 
-    <footer>
-      <p>
-        por <a href="https://linkedin.com/in/felipebossolani">Felipe Bossolani</a>
-        · <a href="https://github.com/felipebossolani/vps-lab">GitHub</a>
-      </p>
-    </footer>
+    <!-- Episódios -->
+    <section class="episodes" id="episodios">
+      <div class="container">
+        <h2 class="section-label">EPISÓDIOS</h2>
+        <div class="grid">
+          {episodes.map((ep, i) => (
+            <div style={`animation-delay: ${i * 0.06}s`}>
+              <EpisodeCard {...ep} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <Footer />
   </main>
 </Layout>
 
 <style>
-  main {
-    max-width: 960px;
+  /* ─── Hero ─── */
+  .hero {
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 2rem;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  header {
+    padding: 7rem 2rem 6rem;
     text-align: center;
-    padding: 4rem 0 2rem;
-    border-bottom: 1px solid #2a2a3e;
-    margin-bottom: 3rem;
   }
 
-  h1 {
-    font-size: 3rem;
-    color: #6C47FF;
-    margin: 0;
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.25em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.1s both;
   }
 
-  .subtitle {
-    color: #888;
-    font-size: 1.1rem;
-    margin-top: 0.5rem;
+  .hero-title {
+    font-family: var(--mono);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.2s both;
+  }
+
+  .hero-sub {
+    font-family: var(--sans);
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.3s both;
+  }
+
+  /* ─── Episodes ─── */
+  .episodes {
+    padding: 0 0 4rem;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.25em;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
   }
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
   }
 
-  footer {
-    text-align: center;
-    margin-top: 4rem;
-    padding-top: 2rem;
-    border-top: 1px solid #2a2a3e;
-    color: #666;
+  .grid > div {
+    opacity: 0;
+    animation: fadeUp 0.4s ease both;
   }
 
-  footer a {
-    color: #6C47FF;
-    text-decoration: none;
+  /* ─── Animações ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── Responsivo ─── */
+  @media (max-width: 640px) {
+    .hero { padding: 4rem 1.5rem 3rem; }
+    .container { padding: 0 1.5rem; }
+    .grid { grid-template-columns: 1fr; }
   }
 </style>

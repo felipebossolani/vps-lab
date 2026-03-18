@@ -1,0 +1,154 @@
+---
+interface Props {
+  number: string;
+  title: string;
+  description: string;
+  status: 'published' | 'soon';
+  codeUrl?: string;
+  postUrl?: string;
+}
+
+const { number, title, description, status, codeUrl, postUrl } = Astro.props;
+const published = status === 'published';
+---
+
+<article class:list={['card', { 'card--dim': !published }]}>
+  <header class="card-header">
+    <span class="ep-number">{number}</span>
+    <span class="divider"></span>
+    <span class:list={['ep-status', { 'ep-status--published': published, 'ep-status--soon': !published }]}>
+      {published ? 'PUBLICADO' : 'EM BREVE'}
+    </span>
+  </header>
+
+  <h2 class="card-title">{title}</h2>
+  <p class="card-desc">{description}</p>
+
+  {published && (
+    <footer class="card-footer">
+      {codeUrl && (
+        <a href={codeUrl} target="_blank" rel="noopener" class="card-link">
+          ver código
+        </a>
+      )}
+      {postUrl && (
+        <a href={postUrl} target="_blank" rel="noopener" class="card-link card-link--secondary">
+          post
+        </a>
+      )}
+    </footer>
+  )}
+</article>
+
+<style>
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .card--dim {
+    background: var(--surface-dim);
+    border-color: var(--border-dim);
+  }
+
+  .card--dim:hover {
+    border-color: var(--border);
+    transform: none;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .ep-number {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .card--dim .ep-number {
+    color: var(--muted-dim);
+  }
+
+  .divider {
+    width: 1px;
+    height: 10px;
+    background: var(--border);
+  }
+
+  .ep-status {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+
+  .ep-status--published { color: var(--accent); }
+  .ep-status--soon      { color: var(--muted-dim); }
+
+  .card-title {
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .card--dim .card-title {
+    color: var(--muted);
+  }
+
+  .card-desc {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .card--dim .card-desc {
+    color: var(--muted-dim);
+  }
+
+  .card-footer {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-link {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    transition: opacity 0.15s;
+  }
+
+  .card-link:hover { opacity: 0.7; }
+
+  .card-link--secondary {
+    color: var(--muted);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>

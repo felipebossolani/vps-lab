@@ -1,0 +1,66 @@
+---
+---
+
+<header>
+  <div class="inner">
+    <a href="/" class="logo" aria-label="vps-lab">
+      <img
+        src="/identity/logo/vpslab-logo.png"
+        alt="vps-lab"
+        height="32"
+        width="auto"
+      />
+    </a>
+
+    <nav>
+      <a href="#episodios">série</a>
+      <a href="https://github.com/felipebossolani/vps-lab" target="_blank" rel="noopener">github</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+    background: rgba(12, 12, 26, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo img {
+    display: block;
+    height: 32px;
+    width: auto;
+  }
+
+  nav {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  nav a {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    transition: color 0.15s;
+  }
+
+  nav a:hover {
+    color: var(--text);
+  }
+</style>
