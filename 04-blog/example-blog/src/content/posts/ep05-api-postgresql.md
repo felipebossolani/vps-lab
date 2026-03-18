@@ -34,9 +34,8 @@ GET /abc1234
 
 1. Databases → New → PostgreSQL
 2. **"Publicly Accessible": desabilitado** — essa é a decisão central
-3. Coolify gera duas connection strings:
-   - **Internal:** `postgres://user:pass@shortener-db:5432/db` — usar essa
-   - **External:** `postgres://user:pass@IP:PORT/db` — não em produção
+3. Na configuração do banco, seção Network, o Coolify mostra a **Postgres URL (internal)**: `postgres://user:pass@shortener-db:5432/db`
+4. A URL externa só aparece se habilitar "Make it publicly available" — não habilite
 
 A URL interna usa o nome do container como hostname. Funciona porque API e banco estão na mesma rede Docker gerenciada pelo Coolify.
 

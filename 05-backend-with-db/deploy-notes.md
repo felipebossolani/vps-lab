@@ -19,9 +19,11 @@ Ele existe apenas na rede interna Docker — só a API consegue falar com ele.
 
 ### Obtendo a connection string interna
 
-Após criar o banco, Coolify mostra duas connection strings:
-- **Internal:** `postgres://shortener-user:SENHA@shortener-db:5432/shortener` ← use essa
-- **External:** `postgres://shortener-user:SENHA@SEU_IP:PORT/shortener` ← NÃO use em produção
+Na tela de configuração do banco, seção **Network**, o Coolify mostra a **Postgres URL (internal)**:
+- `postgres://shortener-user:SENHA@shortener-db:5432/shortener`
+- Clique no ícone do olho para revelar a URL completa
+
+A URL externa só aparece se habilitar "Make it publicly available" — não habilite em produção.
 
 A URL interna funciona porque a API e o banco estão na mesma rede Docker gerenciada pelo Coolify.
 
