@@ -8,7 +8,7 @@ WORKDIR /app
 
 COPY package.json package-lock.json* ./
 
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
 # ── Stage 2: imagem final ────────────────────────────────────────────────────
 FROM node:20-alpine AS runner
