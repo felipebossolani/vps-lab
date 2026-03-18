@@ -6,20 +6,22 @@
 #   curl -X POST http://localhost:3000/shorten -H "Content-Type: application/json" -d '{"url":"https://github.com"}'
 
 services:
-  api:
+  shortener-api:
+    container_name: shortener-api
     build: .
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgres://vpslab:vpslab@db:5432/shortener
+      DATABASE_URL: postgres://vpslab:vpslab@shortener-db:5432/shortener
       BASE_URL: http://localhost:3000
       NODE_ENV: development
     depends_on:
-      db:
+      shortener-db:
         condition: service_healthy
     restart: unless-stopped
 
-  db:
+  shortener-db:
+    container_name: shortener-db
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: vpslab

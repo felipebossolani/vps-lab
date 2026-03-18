@@ -2,7 +2,7 @@
 # Multi-stage build: menor imagem final, sem devDependencies
 
 # ── Stage 1: instalar dependências ──────────────────────────────────────────
-FROM node:20.20-alpine3.21 AS deps
+FROM node:20-alpine3.23 AS deps
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ COPY package.json package-lock.json ./
 RUN npm ci --omit=dev
 
 # ── Stage 2: imagem final ────────────────────────────────────────────────────
-FROM node:20.20-alpine3.21 AS runner
+FROM node:20-alpine3.23 AS runner
 
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
