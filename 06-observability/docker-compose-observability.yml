@@ -33,7 +33,9 @@ services:
 
   # ── Prometheus — Métricas ───────────────────────────────────────────────────
   prometheus:
-    image: prom/prometheus:latest
+    build:
+      context: .
+      dockerfile: prometheus.Dockerfile
     container_name: prometheus
     restart: unless-stopped
     command:
@@ -41,7 +43,6 @@ services:
       - '--storage.tsdb.path=/prometheus'
       - '--storage.tsdb.retention.time=15d'
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - prometheus_data:/prometheus
     networks:
       - monitoring
@@ -59,13 +60,14 @@ services:
 
   # ── Promtail — Agente de logs Docker → Loki ─────────────────────────────────
   promtail:
-    image: grafana/promtail:latest
+    build:
+      context: .
+      dockerfile: promtail.Dockerfile
     container_name: promtail
     restart: unless-stopped
     volumes:
       - /var/log:/var/log:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - ./promtail-config.yml:/etc/promtail/config.yml:ro
     command: -config.file=/etc/promtail/config.yml
     networks:
       - monitoring
