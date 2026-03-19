@@ -23,7 +23,7 @@ curl -fsSL https://cdn.coollabs.io/coolify/install.sh | bash
 
 Após ~3 minutos, o painel fica acessível na porta 8000. A partir daí, tudo pelo browser.
 
-## Perrengues reais
+## O que deu errado
 
 ### PermitRootLogin
 

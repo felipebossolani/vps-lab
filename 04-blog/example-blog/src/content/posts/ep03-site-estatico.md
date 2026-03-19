@@ -26,7 +26,7 @@ Quero um site índice para a série vps-lab. Precisa estar no ar em `site.vpslab
 
 Sem configuração de porta. O Build Pack Static serve os HTMLs diretamente via Traefik — não roda nenhum server Node.
 
-## Perrengues
+## O que deu errado
 
 ### Build Pack errado
 

@@ -72,7 +72,20 @@ Histórico de 90 dias, badge de uptime para o README, alertas por push/email/Tel
 
 ### Docker Compose via GitHub no Coolify
 
-O Coolify suporta Docker Compose conectado ao GitHub — aponta o Base Directory e ele puxa o docker-compose junto com os arquivos referenciados (configs do Prometheus e Promtail). Todos os serviços sobem juntos e compartilham a mesma rede.
+O Coolify suporta Docker Compose conectado ao GitHub — aponta o Base Directory e ele puxa o docker-compose junto com os arquivos referenciados. Todos os serviços sobem juntos e compartilham a mesma rede.
+
+### Bind mounts relativos não funcionam no Coolify
+
+Se o docker-compose usa `./prometheus.yml:/etc/prometheus/prometheus.yml:ro`, o deploy falha. O Coolify clona o repo num diretório interno (`/data/coolify/applications/...`) e o Docker não encontra os arquivos no path esperado.
+
+A solução: criar um Dockerfile mínimo que faz `COPY` do config durante o build:
+
+```dockerfile
+FROM prom/prometheus:latest
+COPY prometheus.yml /etc/prometheus/prometheus.yml
+```
+
+No docker-compose, trocar `image:` por `build:`. Dois arquivos de 2 linhas cada (um pro Prometheus, outro pro Promtail) e o problema sumiu.
 
 ### Data sources usam hostname interno
 

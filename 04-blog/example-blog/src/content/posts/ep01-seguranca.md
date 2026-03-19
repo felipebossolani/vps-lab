@@ -29,7 +29,7 @@ ssh root@SEU_IP 'bash -s' < setup.sh
 - **Chave SSH sem senha** — mais seguro que senha, mais prático que senha + 2FA para automação.
 - **fail2ban com ban de 1h após 3 tentativas** — agressivo o suficiente para bots, tolerante para erros humanos.
 
-## Perrengues
+## O que deu errado
 
 O script precisa ser compatível com o que vem depois. No EP02, o Coolify precisa de portas específicas e bridges Docker que o UFW pode bloquear. O setup.sh já considera isso.
 
