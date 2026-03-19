@@ -24,7 +24,7 @@ Tudo na rede `vpslab-monitoring`, sem nenhum serviço exposto diretamente — Gr
 
 ## Deploy no Coolify
 
-O deploy é via **Stack (Docker Compose)**, não Application. O Coolify lê o docker-compose e sobe todos os serviços de uma vez.
+O deploy é via **Docker Compose conectado ao GitHub** — mesmo repo `felipebossolani/vps-lab`, Base Directory `/06-observability`. O Coolify puxa o docker-compose junto com os arquivos de config (`prometheus.yml`, `promtail-config.yml`) e sobe todos os serviços de uma vez.
 
 Domínios são configurados individualmente:
 - `grafana.vpslab.com.br` — dashboards (protegido por login)
@@ -70,9 +70,9 @@ Histórico de 90 dias, badge de uptime para o README, alertas por push/email/Tel
 
 ## Pontos de atenção
 
-### Stack vs Application no Coolify
+### Docker Compose via GitHub no Coolify
 
-O Coolify tem dois tipos de deploy: Application (um container) e Stack (docker-compose com múltiplos containers). Para observabilidade, Stack é o caminho — todos os serviços sobem juntos e compartilham a mesma rede.
+O Coolify suporta Docker Compose conectado ao GitHub — aponta o Base Directory e ele puxa o docker-compose junto com os arquivos referenciados (configs do Prometheus e Promtail). Todos os serviços sobem juntos e compartilham a mesma rede.
 
 ### Data sources usam hostname interno
 

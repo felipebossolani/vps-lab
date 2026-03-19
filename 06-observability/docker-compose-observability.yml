@@ -1,5 +1,5 @@
 # docker-compose-observability.yml
-# Stack de observabilidade completa — para deploy via Coolify (Stack / Docker Compose)
+# Stack de observabilidade completa — deploy via Coolify (Docker Compose + GitHub)
 #
 # Serviços:
 #   - Grafana        → dashboards (grafana.vpslab.com.br)
@@ -9,7 +9,9 @@
 #   - Uptime Kuma    → status page pública (status.vpslab.com.br)
 #   - Node Exporter  → métricas do host (CPU, memória, disco)
 #
-# No Coolify: Projects → New Stack → colar esse arquivo
+# No Coolify: Projects → New → Docker Compose → GitHub
+#   Base Directory: /06-observability
+#   Docker Compose File: docker-compose-observability.yml
 
 services:
 
