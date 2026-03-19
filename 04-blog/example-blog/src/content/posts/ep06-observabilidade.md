@@ -1,0 +1,87 @@
+---
+title: "EP06 — Observabilidade: saber que algo quebrou antes de alguém perguntar"
+description: "Grafana, Prometheus, Loki, Uptime Kuma — stack de observabilidade self-hosted com um único docker-compose."
+date: 2026-03-19
+tags: ["grafana", "prometheus", "loki", "uptime-kuma", "observabilidade"]
+---
+
+## O problema
+
+Tenho VPS, site, blog e API rodando. Como sei que está tudo funcionando às 3 da manhã? Sem observabilidade, só descubro que algo quebrou quando alguém pergunta "seu site está fora?".
+
+## Stack
+
+Um único docker-compose sobe 6 serviços:
+
+- **Grafana** — dashboards de métricas e logs
+- **Prometheus** — coleta métricas dos containers e do host a cada 15s
+- **Node Exporter** — expõe métricas do host (CPU, memória, disco, rede)
+- **Loki** — agrega logs de todos os containers Docker
+- **Promtail** — agente que coleta logs dos containers e envia para o Loki
+- **Uptime Kuma** — status page pública
+
+Tudo na rede `vpslab-monitoring`, sem nenhum serviço exposto diretamente — Grafana e Uptime Kuma acessíveis via Traefik com HTTPS.
+
+## Deploy no Coolify
+
+O deploy é via **Stack (Docker Compose)**, não Application. O Coolify lê o docker-compose e sobe todos os serviços de uma vez.
+
+Domínios são configurados individualmente:
+- `grafana.vpslab.com.br` — dashboards (protegido por login)
+- `status.vpslab.com.br` — status page (público)
+
+Variáveis de ambiente da stack: `GRAFANA_USER` e `GRAFANA_PASSWORD`.
+
+## Grafana + Node Exporter
+
+O dashboard 1860 (Node Exporter Full) vem pronto — importa o ID no Grafana e já tem:
+
+- CPU por core
+- Memória usada/livre
+- Disco: uso e I/O
+- Rede: tráfego de entrada e saída
+
+Tudo em tempo real, sem criar nada do zero.
+
+## Loki + Promtail
+
+O Promtail coleta logs de todos os containers Docker automaticamente (monta `/var/lib/docker/containers` como read-only).
+
+No Grafana, com Loki como data source:
+- Filtro por container: `{container_name="shortener-api"}`
+- Filtro por nível: error, warn, info
+- Filtro por janela de tempo
+
+Sem precisar fazer SSH para ler logs.
+
+## Uptime Kuma
+
+Status page pública em `status.vpslab.com.br`. Monitora cada serviço individualmente:
+
+| Monitor | URL |
+|---------|-----|
+| Site | `https://site.vpslab.com.br` |
+| Blog | `https://blog.vpslab.com.br` |
+| API | `https://api.vpslab.com.br/health` |
+| Coolify | `https://coolify.vpslab.com.br` |
+| Grafana | `https://grafana.vpslab.com.br` |
+
+Histórico de 90 dias, badge de uptime para o README, alertas por push/email/Telegram/Slack.
+
+## Pontos de atenção
+
+### Stack vs Application no Coolify
+
+O Coolify tem dois tipos de deploy: Application (um container) e Stack (docker-compose com múltiplos containers). Para observabilidade, Stack é o caminho — todos os serviços sobem juntos e compartilham a mesma rede.
+
+### Data sources usam hostname interno
+
+No Grafana, os data sources apontam para `http://prometheus:9090` e `http://loki:3100` — hostname do container, não localhost. Funciona porque estão na mesma rede Docker.
+
+### Promtail precisa de acesso aos logs do Docker
+
+O volume `/var/lib/docker/containers` é montado como read-only. Sem isso, o Promtail não consegue coletar logs dos outros containers.
+
+## Código
+
+[github.com/felipebossolani/vps-lab/tree/main/06-observability](https://github.com/felipebossolani/vps-lab/tree/main/06-observability)
