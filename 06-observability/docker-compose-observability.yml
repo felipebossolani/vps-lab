@@ -30,9 +30,6 @@ services:
       - grafana_data:/var/lib/grafana
     networks:
       - monitoring
-    # Coolify vai gerenciar o domínio e SSL via label do Traefik
-    labels:
-      - "coolify.managed=true"
 
   # ── Prometheus — Métricas ───────────────────────────────────────────────────
   prometheus:
@@ -102,8 +99,6 @@ services:
       - uptime_kuma_data:/app/data
     networks:
       - monitoring
-    labels:
-      - "coolify.managed=true"
 
 volumes:
   grafana_data:
