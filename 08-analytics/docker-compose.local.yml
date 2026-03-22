@@ -1,0 +1,44 @@
+# docker-compose.local.yml — Umami + PostgreSQL para desenvolvimento local
+#
+# Uso:
+#   docker compose -f docker-compose.local.yml up -d
+#   Acessar http://localhost:3000
+#   Login padrão: admin / umami
+#
+#   docker compose -f docker-compose.local.yml down
+
+services:
+  umami:
+    image: ghcr.io/umami-software/umami:postgresql-latest
+    container_name: umami
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://umami-user:umami-user@umami-db:5432/umami
+      APP_SECRET: dev-secret-change-in-production
+    depends_on:
+      umami-db:
+        condition: service_healthy
+
+  umami-db:
+    container_name: umami-db
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: umami-user
+      POSTGRES_PASSWORD: umami-user
+      POSTGRES_DB: umami
+    volumes:
+      - umami_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U umami-user -d umami"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  umami_data:
+
+networks:
+  default:
+    name: vpslab-analytics
