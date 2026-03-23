@@ -48,7 +48,7 @@ sem mandar dados para o Google. Uma instância monitora múltiplos sites.
 
 | Name | Domain |
 |------|--------|
-| VPS Lab Site | `site.vpslab.com.br` |
+| VPS Lab Site | `vpslab.com.br` |
 | VPS Lab Blog | `blog.vpslab.com.br` |
 
 3. Clicar **Edit** em cada site → copiar o **Tracking code**

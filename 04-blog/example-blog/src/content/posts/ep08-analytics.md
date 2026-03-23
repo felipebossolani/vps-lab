@@ -56,7 +56,7 @@ O `data-website-id` é gerado pelo Umami ao adicionar cada site em Settings → 
 
 No painel do Umami, cada site é cadastrado separadamente:
 
-- `site.vpslab.com.br`
+- `vpslab.com.br`
 - `blog.vpslab.com.br`
 - `api.vpslab.com.br`
 

@@ -27,7 +27,7 @@ Cada episódio tem script pronto para rodar, checklist e post publicado no Linke
 ```
 vpslab.com.br
 ├── coolify.vpslab.com.br     → Painel Coolify (HTTPS automático)
-├── site.vpslab.com.br        → Site estático Astro
+├── vpslab.com.br        → Site estático Astro
 ├── blog.vpslab.com.br        → Blog Astro
 ├── api.vpslab.com.br         → API encurtador de URLs (Node + PostgreSQL)
 ├── status.vpslab.com.br      → Uptime Kuma (público)

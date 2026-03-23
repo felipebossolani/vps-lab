@@ -60,7 +60,7 @@ Status page pública em `status.vpslab.com.br`. Monitora cada serviço individua
 
 | Monitor | URL |
 |---------|-----|
-| Site | `https://site.vpslab.com.br` |
+| Site | `https://vpslab.com.br` |
 | Blog | `https://blog.vpslab.com.br` |
 | API | `https://api.vpslab.com.br/health` |
 | Coolify | `https://coolify.vpslab.com.br` |

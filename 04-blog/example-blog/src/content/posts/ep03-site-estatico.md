@@ -7,7 +7,7 @@ tags: ["astro", "deploy", "coolify", "cicd"]
 
 ## O problema
 
-Quero um site índice para a série vps-lab. Precisa estar no ar em `site.vpslab.com.br` com HTTPS, e atualizar automaticamente a cada push no GitHub.
+Quero um site índice para a série vps-lab. Precisa estar no ar em `vpslab.com.br` com HTTPS, e atualizar automaticamente a cada push no GitHub.
 
 ## Stack
 

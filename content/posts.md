@@ -149,7 +149,7 @@ O que fiz:
 → 1. Conectei o repositório vps-lab ao Coolify via GitHub App
 → 2. Apontei o Base Directory para /03-static-sites/example-astro
 → 3. Build pack Nixpacks detectou Astro automaticamente (sem configurar nada)
-→ 4. Adicionei o domínio site.vpslab.com.br — SSL emitido em 90 segundos
+→ 4. Adicionei o domínio vpslab.com.br — SSL emitido em 90 segundos
 → 5. Habilitei Auto Deploy — a partir daí, push = deploy
 
 Uma coisa que aprendi na prática:

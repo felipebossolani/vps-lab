@@ -14,7 +14,7 @@ graph TB
             Coolify[Coolify<br/>PaaS UI]
             
             subgraph Apps["Aplicações"]
-                Astro[Site Astro<br/>site.vpslab.com.br]
+                Astro[Site Astro<br/>vpslab.com.br]
                 Blog[Blog Astro<br/>blog.vpslab.com.br]
                 API[API Node.js<br/>api.vpslab.com.br]
                 Uptime[Uptime Kuma<br/>status.vpslab.com.br]
