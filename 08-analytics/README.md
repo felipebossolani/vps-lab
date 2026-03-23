@@ -5,23 +5,17 @@ Analytics privacy-first para todos os sites da série. Sem cookies, sem Google, 
 ## Stack
 
 - **Umami** — analytics open source, leve (~2KB script)
-- **PostgreSQL 16** — banco gerenciado pelo Coolify (rede interna, sem porta exposta)
+- **PostgreSQL** — banco incluído no docker-compose do Umami (gerenciado pelo próprio recurso)
 - **Domínio:** `umami.vpslab.com.br`
-
-## Uso local
-
-```bash
-docker compose -f docker-compose.local.yml up -d
-# http://localhost:3000 — login: admin / umami
-docker compose -f docker-compose.local.yml down
-```
 
 ## Deploy no Coolify
 
-1. Criar banco PostgreSQL no Coolify (mesmo padrão EP05)
-2. Deploy via Docker Compose + GitHub (Base Directory: `/08-analytics`)
-3. Variáveis: `DATABASE_URL` (connection string interna) + `APP_SECRET`
-4. Domínio: `https://umami.vpslab.com.br`
+O Umami é deployado direto do repo oficial via Public Repository:
+
+1. New Resource → Git → Public Repository
+2. URL: `https://github.com/umami-software/umami.git`
+3. Build Pack: Docker Compose
+4. Domínio: `https://umami.vpslab.com.br:3000`
 
 Ver [deploy-notes.md](deploy-notes.md) para o passo a passo completo.
 
@@ -30,15 +24,11 @@ Ver [deploy-notes.md](deploy-notes.md) para o passo a passo completo.
 Adicionar no `<head>` de cada site Astro:
 
 ```html
-<script defer src="https://umami.vpslab.com.br/script.js" data-website-id="SEU_WEBSITE_ID"></script>
+<script async defer
+  src="https://umami.vpslab.com.br/script.js"
+  data-website-id="SEU_WEBSITE_ID"
+  data-do-not-track="true"
+></script>
 ```
 
 Uma instância do Umami monitora múltiplos sites — cada site tem seu próprio `data-website-id`.
-
-## Arquitetura
-
-```
-[Sites Astro] → script.js → [Umami] → [PostgreSQL interno]
-                                ↑
-                        umami.vpslab.com.br
-```
